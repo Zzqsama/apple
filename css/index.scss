@@ -1,0 +1,984 @@
+@import 'base';
+
+.heisezhegai{
+  position:absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  z-index: 2;
+}
+body #zhegai{
+  display: none;
+  &:checked + .heisezhegai{
+    height: 100vh;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    opacity: 1;
+  }
+}
+.header {
+  z-index: 8002;
+  width: 100%;
+  height: 44px;
+  background:#292929;
+  .header-inner {
+    max-width: 1024px;
+    height: 44px;
+    padding: 0 20px;
+    margin: 0 auto;
+
+    .nav.searching{
+      @for $i from 1 through 7 {
+        li:not(.logo):nth-child(#{$i}) {
+          transform:scale(0.3,0.3);
+          opacity: 0;
+          animation-delay:$i*1s;
+        }
+      }
+    }
+    .nav.suo{
+      @for $i from 10 through 1 {
+        li:not(.logo):nth-child(#{$i}) {
+          transform:scale(0.3,0.3);
+          opacity: 0;
+          transition-delay: $i*0.1s;
+        }
+      }
+    }
+    .nav {
+      text-align: justify;
+      height: 44px;
+      li {
+        height: 44px;
+        line-height: 44px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: center center;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        a {
+          color: white;
+          opacity: 0;
+        }
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+      &::after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+      }
+    }
+    //搜索栏
+    .sousuo{
+      @include c-align;
+      z-index: 10000;
+      top:0;
+      width:60%;
+      height: 44px;
+      padding-left: 50px;
+      background:#292929;
+      background-image: url('../img/search.svg');
+      background-repeat:no-repeat ;
+      background-position: 15px center;
+      overflow: hidden;
+      transform:translateX(1000px);
+      transition:all 1s ease;
+      opacity:0;
+      input{
+        @include v-align;
+        width: 100%;
+        height: 22px;
+        border:none;
+        color:#fff;
+        background:#292929;
+        outline: none;
+        font-family: "zc";
+        font-size: 16px;
+      }
+    }
+    .sousuo.tanchu{
+      transform:translateX(0);
+      opacity: 1;
+    }
+    .close{
+      display: none;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 25px;
+      top: 10px;
+      z-index: 100001;
+      cursor: pointer;
+      background-color:#292929;
+      .hengs,.shus{
+        width: 16px;
+        height: 1px;
+        background: white;
+        @include juzhong;
+      }
+      .hengs{
+        transform:rotateZ(45deg);
+      }
+      .shus{
+        transform:rotateZ(-45deg);
+      }
+      &:hover{
+        color:#B7B7B7;
+      }
+    }
+    .close.tanchu{
+      display: block;
+    }
+
+    .nav-phone {
+      width: 100%;
+      height: 48px;
+     display: none;
+      .menu.active {
+        .heng, .shu {
+          @include juzhong;
+        }
+        .heng {
+          transform: rotateZ(45deg);
+          transform-origin: 50% 50%;
+        }
+        .shu {
+          transform: rotateZ(-45deg);
+          transform-origin: 50% 50%;
+        }
+      }
+      .menu{
+        @include cube(48px);
+        @include v-align;
+        left:0;
+        cursor: pointer;
+        &:hover{
+          opacity: 0.6;
+        }
+        .heng{
+          transition: all 0.3s ease;
+          width: 17px;
+          height: 1px;
+          background-color:white;
+          @include c-align;
+          top:20px;
+        }
+        .shu{
+          transition: all 0.3s ease;
+          width: 17px;
+          height:1px;
+          background-color:white;
+          @include c-align;
+          bottom:20px;
+        }
+      }
+      .logo{
+        @include cube(48px);
+        @include c-align;
+        top:0;
+        background-repeat: no-repeat;
+        background-position: center center;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        &:hover{
+          opacity: 0.6;
+        }
+      }
+      .bag{
+        @include cube(48px);
+        @include v-align;
+        right:0;
+        background-repeat: no-repeat;
+        background-position: center center;
+        cursor: pointer;
+        &:hover{
+          opacity: 0.6;
+        }
+      }
+      .nei-phone{
+        color:white;
+        top:44px;
+        width: 100%;
+        height:0px;
+        background:black;
+        z-index: 888;
+        transition: height 1s ease;
+        ul{
+          transition: opacity 1s ease;
+          opacity: 0;
+        }
+      }
+      .nei-phone.active{
+        z-index: 666;
+        top:44px;
+        width: 100%;
+        height:100vh;
+        background:black;
+        ul{
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+}
+.zhezhao.tanchu{
+  margin-top:44px;
+  width: 100%;
+  height:1200px;
+  background-color: #505050;
+  opacity: 0.2;
+  @include juzhong;
+  z-index:8000;
+
+}
+.sousuo-nei{
+  opacity: 0;
+  width:588px;
+  padding-left: 15px;
+  padding-right:15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  background:white;
+  z-index: 8003;
+  transition: all 1s ease;
+  @include c-align;
+  dl{
+    color:#999999;
+    font-family:"xi";
+    font-weight: 550px;
+    li:nth-child(1){
+      font-size: 12px;
+    }
+    li{
+      transition: all 0.8s ease;
+      transform: translateX(1000px);
+      a{
+        display: block;
+        color:#999999;
+        padding: 8px 10px;
+        &:hover{
+          background-color: #f2f2f2;
+          color:#0188CC;
+        }
+      }
+
+    }
+
+  }
+
+}
+.sousuo-nei.tanchu{
+  height: auto;
+  opacity: 1;
+  dl{
+    @for $i from 10 through 1{
+      li:nth-child(#{$i}){
+        transform: translateX(0);
+        opacity: 1;
+        transition-delay: $i*0.1s+0.1s;
+      }
+    }
+  }
+}
+
+
+@include ons {
+  .header{
+    height: 48px;
+    .header-inner{
+      padding:0;
+      .nav{
+        display: none;
+      }
+      .nav-phone{
+        display: block;
+      }
+    }
+  }
+  .sousuo{
+    display: none;
+  }
+  .sousuo-nei{
+    display: none;
+  }
+}
+
+  $list:(
+          '1':'logo',
+          '2':'mac',
+          '3':'ipad',
+          '4':'iphone',
+          '5':'watch',
+          '6':'tv',
+          '7':'music',
+          '8':'support',
+          '9':'search',
+          '10':'bag'
+  );
+  @each $i in map_keys($list){
+    .#{map_get($list,$i)}{
+      background-image: url("../img/#{map_get($list,$i)}.svg");
+    }
+  }
+
+.lunbo{
+  height: 650px;
+  width: 100%;
+  z-index: 555;
+  float: left;
+  ul{
+    height:650px;
+    width:100%;
+    overflow: hidden;
+    li{
+      position: absolute;
+      width: 100%;
+      background: white;
+      max-width: 100%;
+      height: 650px;
+      float: left;
+      display: inline-block;
+    }
+    .lunbotext{
+      width: 100%;
+      height:235px;
+      background: white;
+    }
+
+    .iphone6s{
+      a{
+        display: block;
+        width: 100%;
+        height: 650px;
+        background-image: url("../img/iphone_6s_medium.jpg");
+        background-position: 50% 90%;
+        background-repeat: no-repeat;
+      }
+      .lunbotext{
+        @include c-align;
+        h3{
+          font-size: 30px;
+          top: 110px;
+          text-align: center;
+          color:white;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-image: url("../img/iphone_6s_medium.png");
+          span{
+            opacity: 0;
+          }
+        }
+        p{
+          text-align: center;
+          top:130px;
+          font-size: 32px;
+          font-family: "xi";
+          color:#000;
+        }
+      }
+    }
+    .ipadpro{
+      a{
+        display: block;
+        width: 100%;
+        height: 650px;
+        background-image: url("../img/ipad_pro_family_medium.jpg");
+        background-position:50% 218%;
+        background-repeat: no-repeat;
+      }
+      .lunbotext{
+        @include c-align;
+        h3{
+          font-size: 30px;
+          top: 110px;
+          text-align: center;
+          color:white;
+          span{
+            font-family: "jixi";
+            opacity: 1;
+            color:#333333;
+            font-size: 50px;
+          }
+        }
+        p{
+          text-align: center;
+          top:130px;
+          font-size: 32px;
+          font-family: "xi";
+          color:#000;
+        }
+      }
+    }
+    .iwatch{
+      a{
+        display: block;
+        width: 100%;
+        height: 650px;
+        background-image: url("../img/apple_watch_trio_medium.jpg");
+        background-position:50% 76%;
+        background-repeat: no-repeat;
+      }
+      .lunbotext{
+        @include c-align;
+        h3{
+          font-size: 30px;
+          top: 110px;
+          text-align: center;
+          color:white;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-image: url("../img/apple_watch_medium.png");
+          span{
+            font-family: "jixi";
+            opacity: 0;
+            color:#333333;
+            font-size: 30px;
+          }
+        }
+        p{
+          text-align: center;
+          top:130px;
+          font-size: 32px;
+          font-family: "xi";
+          color:#000;
+        }
+      }
+    }
+    .macbook{
+      a{
+        display: block;
+        width: 100%;
+        height: 650px;
+        background-image: url('../img/macbook_medium.png');
+        background-position:50% 90%;
+        background-repeat: no-repeat;
+      }
+      .lunbotext{
+        @include c-align;
+        h3{
+          font-size: 30px;
+          top: 110px;
+          text-align: center;
+          color:white;
+          background-position: center center;
+          background-repeat: no-repeat;
+          span{
+            font-family: "jixi";
+            opacity: 1;
+            color:#333333;
+            font-size: 30px;
+          }
+        }
+        p{
+          text-align: center;
+          top:120px;
+          font-size: 32px;
+          font-family: "xi";
+          color:#000;
+        }
+      }
+    }
+  }
+
+  .butl,.butr{
+    width: 67px;
+    height: 128px;
+    @include v-align;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 111;
+  }
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:80px;
+    font-style:normal;
+     color:#a8a8a8;
+    &:hover{
+      color:#969696;
+    }
+  }
+  .iconl:before { content: "\e614"; }
+  .iconr:before { content: "\e622"; }
+
+  .butl{
+    left: 20px;
+  }
+  .butr{
+    right: 20px;
+  }
+  .yuandian{
+    width: 112px;
+    height: 8px;
+    @include c-align;
+    bottom:10px;
+    z-index: 666;
+    div{
+      @include cube(8px);
+      border-radius: 50%;
+      background-color: #999;
+      float: left;
+      margin-left:10px;
+      margin-right: 9px;
+      cursor: pointer;
+    }
+    div.diandian{
+      border:1px solid #326ED7;
+      background-color: white;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+
+@include ons{
+  .lunbo{
+    height: 482px;
+    .imgbox{
+      height: 482px;
+      .iphone6s{
+        height:482px;
+        a{
+          height: 482px;
+          background:url('../img/iphone_6s_small.jpg') no-repeat 50% 90%;
+        }
+        .lunbotext{
+          h3{
+            background:url('../img/iphone_6s_small.png') no-repeat center center;
+          }
+          p{
+            @include c-align;
+            top:160px;
+            width: 300px;
+            text-align: center;
+            font-size: 24px;
+          }
+        }
+      }
+      .ipadpro{
+        height:482px;
+        a{
+          height: 482px;
+          background:url('../img/ipad_pro_family_small.jpg') no-repeat 50% 90%;
+        }
+        .lunbotext{
+          h3{
+            span{
+              font-size: 40px;
+            }
+          }
+          p{
+            @include c-align;
+            top:160px;
+            width: 320px;
+            text-align: center;
+            font-size: 24px;
+          }
+        }
+      }
+      .iwatch{
+        height:482px;
+        a{
+          height:482;
+          background: url('../img/apple_watch_trio_small.jpg') no-repeat 50% 50%;
+        }
+        .lunbotext{
+          h3{
+            background: url('../img/apple_watch_small.png') no-repeat center center;
+          }
+          p{
+            @include c-align;
+            top:160px;
+            width: 400px;
+            text-align: center;
+            font-size: 24px;
+          }
+        }
+      }
+      .macbook{
+        height:482px;
+        a{
+          background: url('../img/macbook_small.png') no-repeat 50% 50%;
+        }
+        .lunbotext{
+          h3{
+            span{
+              font-size: 40px;
+            }
+          }
+          p{
+            @include c-align;
+            top:160px;
+            width: 400px;
+            text-align: center;
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+.guanggao{
+  width: 100%;
+  float: left;
+  .container{
+    width: 100%;
+    margin: 0 auto;
+    .row{
+      width: 100%;
+      @include onl {
+        @for $i from 1 through $number {
+          .col.l#{$i}{
+            width:percentage($i/$number);
+          }
+        }
+      }
+      @include onm {
+        @for $i from 1 through $number {
+          .col.m#{$i}{
+            width:percentage($i/$number);
+          }
+        }
+      }
+      @include ons {
+        @for $i from 1 through $number {
+          .col.s#{$i}{
+            width:percentage($i/$number);
+          }
+        }
+      }
+      div{
+        height: 200px;
+        border-top: 1px solid white;
+        border-right:1px solid white;
+        box-sizing: border-box;
+        float: left;
+        display: block;
+        background-position: top center;
+
+        a{
+          display: block;
+          width: 100%;
+          height:100%;
+          opacity: 0;
+        }
+      }
+      .tv{
+        background-image: url("../img/apple_tv_medium.jpg");
+      }
+      .ios{
+        background-image: url("../img/public_betas_medium.jpg");
+      }
+      .swif{
+        background-image: url("../img/swift_playground_medium.jpg");
+      }
+      .gift{
+        background-image: url("../img/bts_iphone_medium.jpg");
+      }
+      @include ons {
+        .tv{
+          background-image: url("../img/apple_tv_small.jpg");
+        }
+        .ios{
+          background-image: url("../img/public_betas_small.jpg");
+        }
+        .swif{
+          background-image: url("../img/swift_playground_small.jpg");
+
+        }
+        .gift{
+          background-image: url("../img/bts_iphone_small.jpg");
+
+        }
+      }
+      &::after{
+        content:'';
+        display: block;
+        clear: both;
+      }
+    }
+  }
+}
+
+.footer{
+  width: 100%;
+  height: 368px;
+  border-top: 2px solid white;
+  background-color: #F2F2F2;
+  float: left;
+  .footer-inner{
+    max-width: 1024px;
+    height: 300px;
+    margin:0 auto;
+    .container{
+      box-sizing: border-box;
+      height: 300px;
+      padding-top: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
+      div{
+        width:20%;
+        float: left;
+        .xuan1{
+          padding-top: 20px;
+        }
+        dl{
+          dt{
+            height: 20px;
+            font-size: 12px;
+            color:black;
+            font-family: "bold";
+            font-style: normal;
+          }
+          dd{
+            height: 20px;
+            font-size: 10px;
+            font-family: "zhengchang";
+            color:#666666;
+            a{
+              color:#666666;
+              display: inline-block;
+              &:hover{
+                color:black;
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+
+    }
+    .footer-bottom{
+      .footer-shang{
+        margin-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+        font-size: 12px;
+        font-family: "zhengchang";
+        color:#999999;
+        border-bottom: 1px solid #E3E3E3;
+        a{
+          color:#0088CC;
+          font-size: 12px;
+          &:hover{
+            color:black;
+            text-decoration: underline;
+          }
+        }
+      }
+      @include ons {
+        .footer-shang{
+          border-bottom: none;
+        }
+        .lang1{
+          display: block!important;
+        }
+      }
+      .lang1{
+        height: 16px;
+        padding-left: 15px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        display: none;
+        i{
+          font-size: 0;
+          background-image: url("../img/guoqi.png");
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+        span{
+          display: inline-block;
+          height: 16px;
+          line-height: 16px;
+          padding-left: 20px;
+          font-size: 12px;
+          font-family: "zhengchang";
+          color:#666666;
+          background-image: url("../img/guoqi.png");
+          background-repeat: no-repeat;
+          background-position: left center;
+          a{
+            color:#666;
+          }
+        }
+        &:hover{
+          a{
+            color:black;
+            text-decoration: underline;
+          }
+        }
+        &::after{
+          content: '';
+          display: block;
+          clear: both;
+        }
+      }
+      .copyright{
+        .appleInc{
+          padding-top: 10px;
+          padding-left: 20px;
+          font-size: 12px;
+          font-family: "zhengchang";
+          color:#999;
+          float: left;
+        }
+        .privacy{
+          padding-top: 10px;
+          padding-left: 40px;
+          padding-right: 10px;
+          float: left;
+          line-height: 10px;
+          a{
+            padding-left: 10px;
+            padding-right: 10px;
+            border-right: 1px solid #ccc;
+            text-align: center;
+            font-size: 12px;
+            font-family: "zhengchang";
+            color:#666666;
+            &:hover{
+              color:black;
+              text-decoration: underline;
+            }
+          }
+          a:last(){
+            border-right:none;
+          }
+        }
+        .lang{
+          height: 16px;
+          float: right;
+          cursor: pointer;
+          i{
+            font-size: 0;
+            background-image: url("../img/guoqi.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
+          span{
+            display: inline-block;
+            height: 16px;
+            line-height: 16px;
+            padding-left: 20px;
+            font-size: 12px;
+            font-family: "zhengchang";
+            color:#666666;
+            background-image: url("../img/guoqi.png");
+            background-repeat: no-repeat;
+            background-position: left center;
+            a{
+              color:#666;
+            }
+          }
+          &:hover{
+            a{
+              color:black;
+              text-decoration: underline;
+            }
+          }
+        }
+        @include ons {
+          .appleInc{
+            float: none;
+          }
+          .privacy{
+            float: none;
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+@include ons {
+  .footer{
+    .footer-inner{
+      .container{
+        div{
+          width: 100%;
+          dl{
+            width: 100%;
+            dt{
+              border-bottom: 1px solid #E3E3E3;
+              height: 38px;
+              width: 100%;
+              float: left;
+              font-size: 14px;
+              font-family: 'zhengchang';
+              color:#333;
+              line-height: 38px;
+              cursor: pointer;
+              z-index: 9999;
+              &:hover{
+                color:black;
+              }
+              &::after{
+                transition: all 0.8s ease;
+                transform:rotateZ(45deg);
+                transform-origin: 50% 50%;
+                content: '+';
+                @include cube(8px);
+                float: right;
+                margin-right: 10px;
+              }
+            }
+            dd{
+              height: 0px;
+              font-size: 0;
+              opacity: 0;
+
+            }
+            dd.show{
+              z-index: 9998;
+              transition: all 0.4s ease;
+              height: auto;
+              font-size: 12px;
+              opacity: 1;
+              padding: 5px 0;
+            }
+            dd.show:nth-of-type(1){
+              transition: all 0.1s ease;
+              padding-top: 60px;
+              // top:40px;
+              height: 14px;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      .footer-bottom{
+        padding-bottom: 10px;
+        background-color: #f2f2f2;
+        .copyright{
+          .lang{
+            display: none;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
